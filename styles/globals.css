@@ -2,7 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-.dropdown-link {
-    @apply flex p-2 hover:bg-gray-200;
+.dropdown-link-active {
+    @apply  font-bold border-gray-200 text-green-400 shadow-md flex  p-2 hover:bg-gray-200;
   }
+.dropdown-link-not_active {
+    @apply  text-red-800 flex  p-2 hover:bg-gray-200;
+  }
+  .active {
+    @apply font-bold border-gray-200 text-blue-800 shadow-md px-2 py-1 m-2 bg-gray-200 rounded-full hover:text-blue-400;
+  }
+  .not_active {
+    @apply   text-blue-800 px-2 hover:text-blue-400;
+  }
+  
+
   
