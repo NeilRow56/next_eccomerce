@@ -1,12 +1,39 @@
-// pages/_app.js
 import '../styles/globals.css';
 import Layout from '../components/Layout'
+import { SessionProvider, useSession } from 'next-auth/react';
 
-export default function MyApp({ Component, pageProps }) {
+import { useRouter } from 'next/router';
+
+
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
-  )
+    <SessionProvider session={session}>
+      <Layout>
+          {Component.auth ? (
+            <Auth>
+              <Component {...pageProps} />
+            </Auth>
+          ) : (
+            <Component {...pageProps} />
+          )}
+          </Layout>
+    </SessionProvider>
+  );
 }
 
+function Auth({ children }) {
+  const router = useRouter();
+  const { status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push('/unauthorized?message=login required');
+    },
+  });
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  return children;
+}
+
+export default MyApp;

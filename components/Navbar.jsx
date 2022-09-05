@@ -1,14 +1,22 @@
 import Link from 'next/link'
+import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { Menu } from '@headlessui/react'
 import DropdownLink from './DropdownLink'
 import { FaShoppingCart, FaSignInAlt } from "react-icons/fa";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Navbar = () => {
+
+  const { status, data: session } = useSession();
+
     const router = useRouter();
 
   return (
+    <>
+    <ToastContainer position="bottom-center" limit={1} />
     <nav className="flex h-12 items-center px-4 justify-between shadow-md">
             <Link href="/">
               <a className={router.pathname == '/' ? "active " : "not_active" }  > Ecommerce</a>
@@ -27,14 +35,15 @@ const Navbar = () => {
                 </a>
               </Link>
               <FaSignInAlt className='text-green-500' />
-              <Link href="/signin">
-                <a className={router.pathname == '/signin' ? "active" : "not_active" } >  Sign In </a>
-              </Link>
+              
               
               </div>
+              {status === 'loading' ? (
+                'Loading'
+              ) : session?.user ? (
               <Menu as="div" className="relative inline-block">
                   <Menu.Button className="text-blue-800 hover:text-blue-600">
-                    username
+                    {session.user.name}
                   </Menu.Button>
                   <Menu.Items className="absolute right-[-10] w-56 origin-top-right bg-white  shadow-lg ">
                     <Menu.Item>
@@ -62,9 +71,14 @@ const Navbar = () => {
                     </Menu.Item>
                   </Menu.Items>
                 </Menu>
-             
+              ) : (
+                <Link href="/signin">
+                  <a className="p-2">Login</a>
+                </Link>
+              )}
             </div>
           </nav>
+          </>
   )
 }
 
