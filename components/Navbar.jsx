@@ -14,6 +14,11 @@ const Navbar = () => {
 
     const router = useRouter();
 
+    const logoutClickHandler = () => {
+      
+      signOut({ callbackUrl: '/signin' });
+    };
+
   return (
     <>
     <ToastContainer position="bottom-center" limit={1} />
@@ -62,8 +67,11 @@ const Navbar = () => {
                     </Menu.Item>
                     <Menu.Item>
                       <a
+                        
+                        href="#"
+                        onClick={logoutClickHandler}
                         className={router.pathname == '/cart' ? "dropdown-link-active" : "dropdown-link-not_active" }
-                        href="/order-history"
+                        
                         
                       >
                         Logout

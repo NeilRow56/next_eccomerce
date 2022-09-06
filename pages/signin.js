@@ -94,7 +94,7 @@ const Signin = () => {
         <div className='text-red-400 text-md'>
             Don&apos;t have an account? &nbsp;
         </div>
-        <Link href='/register'>
+        <Link href={`/register?redirect=${redirect || '/'}`}>
         <a className='text-sm text-blue-400'>Register</a>
         </Link>
 
