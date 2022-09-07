@@ -6,9 +6,17 @@ import DropdownLink from './DropdownLink'
 import { FaShoppingCart, FaSignInAlt } from "react-icons/fa";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import React, { useContext, useEffect, useState } from 'react';
+import { Store } from '../utils/Store';
 
 
 const Navbar = () => {
+  const { state } = useContext(Store);
+  const { cart } = state;
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+  useEffect(() => {
+    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
+  }, [cart.cartItems]);
 
   const { status, data: session } = useSession();
 
@@ -32,11 +40,9 @@ const Navbar = () => {
               <Link href="/cart">
                 <a className={router.pathname == '/cart' ? "active" : "not_active" } > 
                 Cart
-                  
-                    <span className="ml-2 rounded-full bg-red-600  p-2 text-xs font-bold text-white">
-                      23
-                    </span>
-                  
+                {cartItemsCount > 0 && (
+                  <span className='ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white'>{cartItemsCount}</span>
+                )}
                 </a>
               </Link>
               <FaSignInAlt className='text-green-500' />
