@@ -30,7 +30,7 @@ const Navbar = () => {
   return (
     <>
     <ToastContainer position="bottom-center" limit={1} />
-    <nav className="flex h-12 items-center px-4 justify-between shadow-md">
+    <nav className="flex h-12 items-center px-4 justify-between shadow-md mb-5">
             <Link href="/">
               <a className={router.pathname == '/' ? "active " : "not_active" }  > Ecommerce</a>
                </Link>

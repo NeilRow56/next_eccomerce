@@ -52,10 +52,10 @@ export default function LoginScreen() {
         <title>Create Account</title>
     </Head>
       <form
-        className="mx-auto max-w-screen-md"
+        className="mx-auto max-w-screen-md mt-16"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h1 className="mb-4 text-xl">Create Account</h1>
+        <h1 className="mb-4 text-3xl text-blue-800">Create Account</h1>
         <div className="mb-4">
           <label htmlFor="name">Name</label>
           <input
@@ -89,6 +89,7 @@ export default function LoginScreen() {
           {errors.email && (
             <div className="text-red-500">{errors.email.message}</div>
           )}
+          <small id="emailHelp" className='text-sm text-gray-400 '>We&apos;ll never share your email with anyone else</small>
         </div>
         <div className="mb-4">
           <label htmlFor="password">Password</label>

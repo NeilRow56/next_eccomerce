@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Head from 'next/head';
 
 function CartScreen() {
   const router = useRouter();
@@ -22,11 +23,17 @@ function CartScreen() {
     const quantity = Number(qty);
     
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+    
     toast.success('Product updated in the cart');
   };
   return (
     < >
-      <h1 className="mb-4 text-xl">Shopping Cart</h1>
+    <div> 
+    <Head>
+        <title>Shopping cart</title>
+    </Head>
+    </div>
+      <h1 className="mb-4 text-xl mt-5">Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <div>
           Cart is empty. <Link href="/">Go shopping</Link>
@@ -77,7 +84,7 @@ function CartScreen() {
                     <td className="p-5 text-right">£{item.price.toFixed(2)}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => removeItemHandler(item)}>
-                        <HiOutlineTrash className="h-5 w-5"></HiOutlineTrash>
+                        <HiOutlineTrash className="h-6 w-6 mt-1 text-red-500"></HiOutlineTrash>
                       </button>
                     </td>
                   </tr>
@@ -95,7 +102,7 @@ function CartScreen() {
               </li>
               <li>
                 <button
-                  onClick={() => router.push('login?redirect=/shipping')}
+                  onClick={() => router.push('signin?redirect=/shipping')}
                   className="primary-button w-full"
                 >
                   Check Out
