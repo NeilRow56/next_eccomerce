@@ -1,32 +1,37 @@
 import Head from "next/head"
 import Link from "next/link"
+import Product from '../../models/Product'
+import dbConnect from '../../lib/dbConnect'
+import convertDocToObj from '../../lib/convertDocToObj'
 import { useRouter } from 'next/router'
-import data from "../../utils/data"
+// import data from "../../utils/data"
+import axios from 'axios'
 import { HiArrowLeft } from "react-icons/hi";
 import Image from "next/image";
 import React, { useContext } from 'react';
 import { Store } from '../../utils/Store';
 
-const ProductScreen = () => {
-
+const ProductScreen = ( props ) => {
+    const { product } = props
     const { state, dispatch } = useContext(Store);
     const router = useRouter();
-    const { query }  = useRouter()
-    const { slug } = query
-    const product  = data.products.find(x => x.slug === slug);
-
+     
+    
     
     if(!product) {
         return (
+            
             <div>Product Not Found</div>
+            
         )
     }
 
-    const addToCartHandler = () => {
+    const addToCartHandler = async () => {
       const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
       const quantity = existItem ? existItem.quantity + 1 : 1;
+      const { data } = await axios.get(`/api/products/${product._id}`);
   
-      if (product.countInStock < quantity) {
+      if (data.countInStock < quantity) {
         alert('Sorry. Product is out of stock');
         return;
       }
@@ -39,8 +44,9 @@ const ProductScreen = () => {
     
     <>
       <div> 
+    
     <Head>
-        <title>{product.name}</title>
+        <title>{product .name}</title>
     </Head>
     </div>
       <div  className="container">
@@ -58,6 +64,7 @@ const ProductScreen = () => {
             alt={product.name}
             width={640}
             height={640}
+            priority
             layout="responsive"
           ></Image>
         </div>
@@ -98,5 +105,20 @@ const ProductScreen = () => {
        </> 
   )
 }
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { slug } = params;
+
+  await dbConnect();
+  const product = await Product.findOne({ slug }).lean();
+ 
+  return {
+    props: {
+      product: product ? convertDocToObj(product) : null,
+    },
+  };
+}
+
 
 export default ProductScreen
