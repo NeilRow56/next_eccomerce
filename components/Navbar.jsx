@@ -3,6 +3,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { Menu } from '@headlessui/react'
 import DropdownLink from './DropdownLink'
+import Cookies from 'js-cookie';
 import { FaShoppingCart, FaSignInAlt } from "react-icons/fa";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,7 +12,7 @@ import { Store } from '../utils/Store';
 
 
 const Navbar = () => {
-  const { state } = useContext(Store);
+  const { state,dispatch} = useContext(Store);
   const { cart } = state;
   const [cartItemsCount, setCartItemsCount] = useState(0);
   useEffect(() => {
@@ -23,7 +24,8 @@ const Navbar = () => {
     const router = useRouter();
 
     const logoutClickHandler = () => {
-      
+      Cookies.remove('cart');
+      dispatch({ type: 'CART_RESET' });
       signOut({ callbackUrl: '/signin' });
     };
 

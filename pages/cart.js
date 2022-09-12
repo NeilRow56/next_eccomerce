@@ -18,6 +18,7 @@ function CartScreen() {
   } = state;
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+    toast.warning('Product removed from the cart');
   };
   const updateCartHandler = async (item, qty) => {
     const quantity = Number(qty);
