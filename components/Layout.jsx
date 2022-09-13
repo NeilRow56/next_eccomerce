@@ -1,7 +1,7 @@
 // components/layout.js
 
 
-import Navbar from './Navbar'
+import Navbar1 from './Navbar1'
 
 
 export default function Layout({ children }) {
@@ -9,7 +9,7 @@ export default function Layout({ children }) {
     <>
     
     <div className='container mx-auto'>
-      <Navbar />
+      <Navbar1 />
       <main>{children}</main>
       
     </div>

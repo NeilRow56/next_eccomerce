@@ -2,16 +2,17 @@ import Link from 'next/link'
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { Menu } from '@headlessui/react'
-import DropdownLink from './DropdownLink'
+
 import Cookies from 'js-cookie';
 import { FaShoppingCart, FaSignInAlt } from "react-icons/fa";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useContext, useEffect, useState } from 'react';
 import { Store } from '../utils/Store';
+import DropdownMenu from './DropdownMenu';
 
 
-const Navbar = () => {
+const Navbar1 = () => {
   const { state,dispatch} = useContext(Store);
   const { cart } = state;
   const [cartItemsCount, setCartItemsCount] = useState(0);
@@ -54,39 +55,9 @@ const Navbar = () => {
               {status === 'loading' ? (
                 'Loading'
               ) : session?.user ? (
-              <Menu as="div" className="relative inline-block">
-                  <Menu.Button className="text-blue-800 hover:text-blue-600">
-                    {session.user.name}
-                  </Menu.Button>
-                  <Menu.Items className="absolute right-[-10] w-56 origin-top-right bg-white  shadow-lg ">
-                    <Menu.Item>
-                    <DropdownLink className={router.pathname == '/cart' ? "dropdown-link-active" : "dropdown-link-not_active" }
-                        href="/profile">
-                        Profile
-                      </DropdownLink>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <DropdownLink
-                        className={router.pathname == '/cart' ? "dropdown-link-active" : "dropdown-link-not_active" }
-                        href="/order-history"
-                      >
-                        Order History
-                      </DropdownLink>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a
-                        
-                        href="#"
-                        onClick={logoutClickHandler}
-                        className={router.pathname == '/cart' ? "dropdown-link-active" : "dropdown-link-not_active" }
-                        
-                        
-                      >
-                        Logout
-                      </a>
-                    </Menu.Item>
-                  </Menu.Items>
-                </Menu>
+            <DropdownMenu />
+                
+                
               ) : (
                 <Link href="/signin">
                   <a className="p-2">Login</a>
@@ -98,4 +69,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Navbar1
