@@ -8,7 +8,7 @@ import React, { useContext, useEffect, useState } from 'react';
 const links = [
   { href: '/profile', label: 'Profile' },
   { href: '/order-history', label: 'Order History' },
-  { href: '/admin/dashboard', label: 'dashboard' },
+  { href: '/spare', label: 'Spare' },
   
 ]
 
@@ -35,6 +35,16 @@ function DropdownMenu() {
             {link.label}
           </Menu.Item>
         ))}
+                            {session.user.isAdmin && (
+                      <Menu.Item 
+                      as='a'
+                      href='/admin/dashboard'
+                      className={router.pathname == '/admin/dashboard' ? "dropdown-link-active" : "dropdown-link-not_active" }>
+                        
+                          <a>Admin Dashboard</a>
+                        
+                      </Menu.Item>
+                    )}
         <Menu.Item>
 
         
@@ -42,13 +52,14 @@ function DropdownMenu() {
                         
                         href="#"
                         onClick={logoutClickHandler}
-                        className={router.pathname == '/cart' ? "dropdown-link-active" : "dropdown-link-not_active" }
+                        className={router.pathname == '/signout' ? "dropdown-link-active" : "dropdown-link-not_active" }
                         
                         
                       >
                         Logout
         </a>
         </Menu.Item>
+
       </Menu.Items>
     </Menu>
   )
