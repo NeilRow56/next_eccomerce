@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+a {
+  @apply text-blue-600 hover:text-blue-800;
+}
+
+
 .dropdown-link-active {
     @apply  font-bold border-gray-200 text-green-400 shadow-md flex  p-2 hover:bg-gray-200;
   }
